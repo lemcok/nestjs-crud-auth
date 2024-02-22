@@ -1,0 +1,24 @@
+GET http://localhost:3000/tasks
+###
+GET http://localhost:3000/tasks/100
+
+###
+POST http://localhost:3000/tasks
+Content-Type: application/json
+
+{
+  "title": "Aprender ingless",
+  "description": "ingles britanico"
+}
+
+###
+PATCH  http://localhost:3000/tasks/3
+Content-Type: application/json
+
+{
+  "title": "Aprender python",
+  "description": "ingles britanico"
+}
+
+###
+DELETE   http://localhost:3000/tasks/4

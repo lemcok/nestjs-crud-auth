@@ -19,8 +19,8 @@ export class TasksService {
     return await this.prisma.task.findMany();
   }
 
-  async findOne(id: number): Promise<Task> {
-    return this.prisma.task.findUniqueOrThrow({ where: { id } });
+  async findOne(id: number): Promise<Task | null> {
+    return this.prisma.task.findUnique({ where: { id } });
   }
 
   async update(id: number, updateTaskDto: Task): Promise<Task> {

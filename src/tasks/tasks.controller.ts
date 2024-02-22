@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  NotFoundException,
   Param,
   Patch,
   Post,
@@ -28,17 +29,27 @@ export class TasksController {
   }
 
   @Get(":id")
-  findOne(@Param("id") id: string) {
-    return this.tasksService.findOne(+id);
+  async findOne(@Param("id") id: string) {
+    const taskFound = await this.tasksService.findOne(+id);
+    if (!taskFound) throw new NotFoundException("Task does not exits");
+    return taskFound;
   }
 
   @Patch(":id")
-  update(@Param("id") id: string, @Body() updateTaskDto: Task) {
-    return this.tasksService.update(+id, updateTaskDto);
+  async update(@Param("id") id: string, @Body() updateTaskDto: Task) {
+    try {
+      return await this.tasksService.update(+id, updateTaskDto);
+    } catch (error) {
+      throw new NotFoundException("Task does not exists");
+    }
   }
 
   @Delete(":id")
-  delete(@Param("id") id: string) {
-    return this.tasksService.delete(+id);
+  async delete(@Param("id") id: string) {
+    try {
+      return await this.tasksService.delete(+id);
+    } catch (error) {
+      throw new NotFoundException("Task does not exists");
+    }
   }
 }
